@@ -4,8 +4,9 @@ import QtQuick.Layouts 1.1
 
 Window {
     visible: true
-    width: Screen.width
-    height: Screen.height
+    //visibility: Window.FullScreen
+    width: 1200
+    height: 800
 
     Rectangle {
         id: root
@@ -55,7 +56,7 @@ Window {
             Text {
                 Layout.columnSpan: 3
                 id: text
-                text: qsTr("ololololo")
+                text: qsTr("ololo")
                 anchors.horizontalCenter: parent.horizontalCenter
                 anchors.verticalCenter: parent.verticalCenter
                 font.pointSize: 64
