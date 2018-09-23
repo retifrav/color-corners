@@ -57,8 +57,7 @@ Window {
                 Layout.columnSpan: 3
                 id: text
                 text: qsTr("ololo")
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.verticalCenter: parent.verticalCenter
+                Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 font.pointSize: 64
             }
 
