@@ -1,12 +1,14 @@
-import QtQuick 2.2
-import QtQuick.Window 2.2
-import QtQuick.Layouts 1.1
+import QtQuick 2.15
+import QtQuick.Window 2.15
+import QtQuick.Layouts 1.15
 
 Window {
     visible: true
     //visibility: Window.FullScreen
     width: 1200
+    minimumWidth: 700
     height: 800
+    minimumHeight: 500
 
     Rectangle {
         id: root
