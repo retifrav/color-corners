@@ -10,8 +10,10 @@ Window {
     height: 800
     minimumHeight: 500
 
+    readonly property string defaultColor: "white"
+
     Rectangle {
-        id: root
+        id: background
         anchors.fill: parent
 
         GridLayout {
@@ -19,20 +21,16 @@ Window {
             rows: 3
             columns: 3
 
-            // 1 row
+            // 1st row
             Rectangle {
-                id: rectRed
-                // Layout.fillHeight: true
-                // Layout.fillWidth: true
                 Layout.alignment: Qt.AlignLeft | Qt.AlignTop
                 color: "red"
-                Layout.preferredWidth: 150
-                Layout.preferredHeight: 150
+                Layout.preferredWidth: background.width / 8
+                Layout.preferredHeight: Layout.preferredWidth
 
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        root.color = rectRed.color;
+                TapHandler {
+                    onTapped: {
+                        background.color = parent.color;
                     }
                 }
             }
@@ -41,39 +39,42 @@ Window {
                 Layout.fillWidth: true
             }
             Rectangle {
-                id: rectBlue
                 Layout.alignment: Qt.AlignRight | Qt.AlignTop
                 color: "blue"
-                Layout.preferredWidth: 150
-                Layout.preferredHeight: 150
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        root.color = rectBlue.color;
+                Layout.preferredWidth: background.width / 8
+                Layout.preferredHeight: Layout.preferredWidth
+
+                TapHandler {
+                    onTapped: {
+                        background.color = parent.color;
                     }
                 }
             }
 
-            // 2 row
+            // 2nd row
             Text {
                 Layout.columnSpan: 3
-                id: text
                 text: qsTr("ololo")
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignVCenter
                 font.pointSize: 64
+
+                TapHandler {
+                    onTapped: {
+                        background.color = defaultColor;
+                    }
+                }
             }
 
-            // 3 row
+            // 3rd row
             Rectangle {
-                id: rectGreen
                 Layout.alignment: Qt.AlignLeft | Qt.AlignBottom
                 color: "green"
-                Layout.preferredWidth: 150
-                Layout.preferredHeight: 150
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        root.color = rectGreen.color;
+                Layout.preferredWidth: background.width / 8
+                Layout.preferredHeight: Layout.preferredWidth
+
+                TapHandler {
+                    onTapped: {
+                        background.color = parent.color;
                     }
                 }
             }
@@ -82,15 +83,14 @@ Window {
                 Layout.fillWidth: true
             }
             Rectangle {
-                id: rectYellow
                 Layout.alignment: Qt.AlignRight | Qt.AlignBottom
                 color: "yellow"
-                Layout.preferredWidth: 150
-                Layout.preferredHeight: 150
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        root.color = rectYellow.color;
+                Layout.preferredWidth: background.width / 8
+                Layout.preferredHeight: Layout.preferredWidth
+
+                TapHandler {
+                    onTapped: {
+                        background.color = parent.color;
                     }
                 }
             }
