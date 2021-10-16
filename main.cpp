@@ -3,7 +3,9 @@
 
 int main(int argc, char *argv[])
 {
-    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    #if QT_VERSION < QT_VERSION_CHECK(6, 0, 0)
+        QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    #endif
 
     //qputenv("QSG_INFO", "1");
     //qputenv("QSG_VISUALIZE", "overdraw");
