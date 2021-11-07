@@ -8,14 +8,25 @@ project("color-corners"
 
 set(CMAKE_CXX_STANDARD 17)
 
+list(APPEND CMAKE_MODULE_PATH
+    "${CMAKE_CURRENT_SOURCE_DIR}/cmake"
+)
+
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
 # for Sublime Text LSP
 #set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-find_package(QT NAMES Qt6 COMPONENTS Quick Qml REQUIRED)
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Quick Qml REQUIRED)
+find_package(QT NAMES Qt6 Qt5 COMPONENTS Quick Qml QmlWorkerScript REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Quick Qml QmlWorkerScript REQUIRED)
+
+if (Qt${QT_VERSION_MAJOR}_FOUND)
+    get_filename_component(QT_HOME "${Qt${QT_VERSION_MAJOR}_DIR}/../../.." ABSOLUTE)
+    message(STATUS "Found Qt ${QT_VERSION}: ${QT_HOME}")
+else()
+    message(FATAL_ERROR "Couldn't find Qt")
+endif()
 
 if(UNIX)
     if(NOT APPLE)
@@ -48,6 +59,33 @@ else()
     else()
         add_executable(${CMAKE_PROJECT_NAME})
     endif()
+endif()
+
+get_target_property(QT_TARGET_TYPE Qt${QT_VERSION_MAJOR}::Core TYPE)
+if(${QT_TARGET_TYPE} STREQUAL "STATIC_LIBRARY")
+    message(STATUS "This Qt is static")
+    include(QtStaticPlugins)
+
+#    qt_generate_plugin_import(${CMAKE_PROJECT_NAME}
+#        OUTPUT "${CMAKE_PROJECT_NAME}_plugin_import.cpp"
+#        OUTPUT_DIR "${PROJECT_BINARY_DIR}"
+#        #VERBOSE
+#    )
+
+    qt_generate_qml_plugin_import(${CMAKE_PROJECT_NAME}
+        QML_DIR "${QT_HOME}/qml"
+        QML_SRC "${CMAKE_CURRENT_SOURCE_DIR}"
+        OUTPUT "${CMAKE_PROJECT_NAME}_qml_plugin_import.cpp"
+        OUTPUT_DIR "${PROJECT_BINARY_DIR}"
+        #VERBOSE
+    )
+
+    # this target needs to be linked after qt_generate_qml_plugin_import call
+    if(TARGET Qt${QT_VERSION_MAJOR}::QmlWorkerScript)
+        target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE Qt${QT_VERSION_MAJOR}::QmlWorkerScript)
+    endif()
+else()
+    message(STATUS "This Qt is ${QT_TARGET_TYPE}")
 endif()
 
 set(sources
