@@ -73,10 +73,10 @@ if(${QT_TARGET_TYPE} STREQUAL "STATIC_LIBRARY")
         message(STATUS "This Qt version (${QT_VERSION}) is newer than ${QT_VERSION_WITH_QML_IMPORTS}")
         find_package(Qt5QmlImportScanner REQUIRED)
         qt5_import_qml_plugins(${CMAKE_PROJECT_NAME})
-    else() # use custom module
+    else() # use a custom module
         message(STATUS "This Qt version (${QT_VERSION}) is older than ${QT_VERSION_WITH_QML_IMPORTS}")
         include(QtStaticPlugins)
-        # this is not needed, actually
+        # this adds lots of unused modules and actually is not needed at all, as it seems
         #qt_generate_plugin_import(${CMAKE_PROJECT_NAME}
         #    OUTPUT "${CMAKE_PROJECT_NAME}_plugin_import.cpp"
         #    OUTPUT_DIR "${PROJECT_BINARY_DIR}"
