@@ -65,7 +65,7 @@ get_target_property(QT_TARGET_TYPE Qt${QT_VERSION_MAJOR}::Core TYPE)
 if(${QT_TARGET_TYPE} STREQUAL "STATIC_LIBRARY")
     message(STATUS "This Qt is static")
 
-    # from 5.14 there is a standard fuction for this
+    # from 5.14 there is a standard function for this
     set(QT_VERSION_WITH_QML_IMPORTS 5.14)
     if(${QT_VERSION} VERSION_EQUAL ${QT_VERSION_WITH_QML_IMPORTS}
         OR ${QT_VERSION} VERSION_GREATER ${QT_VERSION_WITH_QML_IMPORTS}
