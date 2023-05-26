@@ -133,10 +133,11 @@ if (UNIX)
         # )
     else()
         target_link_libraries(${CMAKE_PROJECT_NAME}
-            ${CMAKE_THREAD_LIBS_INIT}
-            ${X11_LIBRARIES}
-            ${CMAKE_DL_LIBS}
-            )
+            PRIVATE
+                ${CMAKE_THREAD_LIBS_INIT}
+                ${X11_LIBRARIES}
+                ${CMAKE_DL_LIBS}
+        )
     endif()
 endif()
 
