@@ -89,10 +89,14 @@ if(${QT_TARGET_TYPE} STREQUAL "STATIC_LIBRARY")
             OUTPUT_DIR "${PROJECT_BINARY_DIR}"
             #VERBOSE
         )
-        # this target needs to be linked after qt_generate_qml_plugin_import call
-        if(TARGET Qt${QT_VERSION_MAJOR}::QmlWorkerScript)
-            target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE Qt${QT_VERSION_MAJOR}::QmlWorkerScript)
-        endif()
+    endif()
+
+    # this target needs to be linked to as well, otherwise "undefined reference to `QQmlWorkerScriptModule::registerQuickTypes()'"
+    if(TARGET Qt${QT_VERSION_MAJOR}::QmlWorkerScript)
+        target_link_libraries(${CMAKE_PROJECT_NAME}
+            PRIVATE
+                Qt${QT_VERSION_MAJOR}::QmlWorkerScript
+        )
     endif()
 else()
     message(STATUS "This Qt is ${QT_TARGET_TYPE}")
