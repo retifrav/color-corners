@@ -65,6 +65,14 @@ get_target_property(QT_TARGET_TYPE Qt${QT_VERSION_MAJOR}::Core TYPE)
 if(${QT_TARGET_TYPE} STREQUAL "STATIC_LIBRARY")
     message(STATUS "This Qt is static")
 
+    if(MINGW)
+        # without it there will be runtime error about some of MinGW DLLs,
+        # even if you configured Qt with -static-runtime
+        #
+        # probably there is a better way, but that works too
+        set(CMAKE_EXE_LINKER_FLAGS "-static-libgcc -static-libstdc++ -static")
+    endif()
+
     # from 5.14 there is a standard function for this
     set(QT_VERSION_WITH_QML_IMPORTS 5.14)
     if(${QT_VERSION} VERSION_EQUAL ${QT_VERSION_WITH_QML_IMPORTS}
