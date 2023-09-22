@@ -66,11 +66,20 @@ if(${QT_TARGET_TYPE} STREQUAL "STATIC_LIBRARY")
     message(STATUS "This Qt is static")
 
     if(MINGW)
-        # without it there will be runtime error about some of MinGW DLLs,
+        # without it there will be runtime error about missing MinGW runtime,
         # even if you configured Qt with -static-runtime
         #
         # probably there is a better way, but that works too
         set(CMAKE_EXE_LINKER_FLAGS "-static-libgcc -static-libstdc++ -static")
+        # and without these there will be runtime errors about missing
+        # zstd and zlib DLLs, and if you remove QtCore from here,
+        # it will still complain about missing zstd despite having -lzstd
+        target_link_libraries(${CMAKE_PROJECT_NAME}
+            PRIVATE
+                Qt${QT_VERSION_MAJOR}::Core
+                -lz
+                -lzstd
+        )
     endif()
 
     # from 5.14 there is a standard function for this
