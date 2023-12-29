@@ -18,6 +18,7 @@ set(CMAKE_AUTORCC ON)
 # for Sublime Text LSP
 #set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+# quite annoying, but it has to be all capital `QT` in the first find_package()
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Quick Qml QmlWorkerScript REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Quick Qml QmlWorkerScript REQUIRED)
 
